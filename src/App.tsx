@@ -15,7 +15,6 @@ import {
   Pause,
   Smartphone,
   Award,
-  ArrowLeft,
   Volume2,
   ExternalLink,
 } from 'lucide-react';
@@ -164,23 +163,32 @@ export default function App() {
     },
   };
 
+  const guestAudioSuiteBridge = {
+    ...ADAT_SUITES[0],
+    regionLabel: 'MUSIK PERNIKAHAN',
+    musicTrack: {
+      ...activeTemplate.musicConfig,
+    },
+  };
+
+  // Handler to open guest experience cleanly in a new tab (or fallback to current tab if popup blocked)
+  const handleOpenGuestFullscreen = (guestName?: string) => {
+    const targetGuest = guestName || activeCustomization.guestRecipientName || 'Tamu Undangan';
+    const guestUrl = `/?template=${selectedTemplateId}&to=${encodeURIComponent(targetGuest)}&demo=true`;
+    const win = window.open(guestUrl, '_blank');
+    if (!win) {
+      setCoverResetCount((c) => c + 1);
+      setActiveTab('fullscreen-guest');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   // If in Pure Fullscreen Guest View, render an uncluttered full immersion experience
+  // No studio navigation, headers, or dashboards are accessible to guests
   if (activeTab === 'fullscreen-guest') {
     return (
       <div className="min-h-screen bg-slate-950 text-white relative">
         <FloatingPetalsOverlay active={showPetals} />
-
-        {/* Floating Return Pill for Presenter */}
-        <div className="fixed top-4 right-4 z-50">
-          <button
-            type="button"
-            onClick={() => setActiveTab('demo')}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 hover:bg-slate-800 backdrop-blur-md border border-slate-700 text-slate-100 text-xs font-medium shadow-2xl transition-all cursor-pointer"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 text-amber-400" />
-            <span>Kembali ke Studio DIGIAT</span>
-          </button>
-        </div>
 
         <main className="max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
           <TemplateInvitationRenderer
@@ -197,21 +205,10 @@ export default function App() {
         </main>
 
         <FloatingCeremonyAudioPlayer
-          activeSuite={currentAudioSuiteBridge}
+          activeSuite={guestAudioSuiteBridge}
           isPlaying={isPlayingAudio}
           onTogglePlay={handleToggleAudio}
-          onSelectSuiteMusic={(suite) => {
-            const mapRegionToTemplate: Record<string, TemplateId> = {
-              jawa: 'javanese-royal',
-              sunda: 'sundanese-romance',
-              minang: 'minang-heritage',
-              bali: 'balinese-sacred',
-              batak: 'modern-nusantara',
-              bugis: 'islamic-elegance',
-            };
-            const targetId = mapRegionToTemplate[suite.id] || 'javanese-royal';
-            handleSelectTemplate(targetId, true);
-          }}
+          hideTrackSelector={true}
         />
       </div>
     );
@@ -412,7 +409,7 @@ export default function App() {
               isPlayingAudio={isPlayingAudio}
               onToggleAudio={handleToggleAudio}
               onResetCover={() => setCoverResetCount((c) => c + 1)}
-              onOpenFullscreen={() => setActiveTab('fullscreen-guest')}
+              onOpenFullscreen={() => handleOpenGuestFullscreen()}
             >
               <TemplateInvitationRenderer
                 key={`${selectedTemplateId}-${coverResetCount}`}
@@ -446,10 +443,7 @@ export default function App() {
               setActiveTab('pitch');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            onOpenFullGuestView={() => {
-              setActiveTab('fullscreen-guest');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onOpenFullGuestView={() => handleOpenGuestFullscreen()}
           />
         )}
 
@@ -460,11 +454,7 @@ export default function App() {
             customization={activeCustomization}
             onUpdateCustomization={handleUpdateCustomization}
             wishes={wishes}
-            onLaunchGuestExperience={() => {
-              setCoverResetCount((c) => c + 1);
-              setActiveTab('fullscreen-guest');
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onLaunchGuestExperience={(guestName) => handleOpenGuestFullscreen(guestName)}
             onOpenMobileSimulator={() => {
               setCoverResetCount((c) => c + 1);
               setActiveTab('demo');

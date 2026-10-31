@@ -31,7 +31,7 @@ interface PublishingDashboardViewProps {
   customization: ClientCustomization;
   onUpdateCustomization: (updated: ClientCustomization) => void;
   wishes: GuestWish[];
-  onLaunchGuestExperience: () => void;
+  onLaunchGuestExperience: (guestName?: string) => void;
   onOpenMobileSimulator: () => void;
 }
 
@@ -164,7 +164,7 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
             </button>
             <button
               type="button"
-              onClick={onLaunchGuestExperience}
+              onClick={() => onLaunchGuestExperience()}
               className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-3 rounded-xl text-xs font-medium tracking-[0.02em] flex items-center gap-2 cursor-pointer shadow-xs transition-all"
             >
               <span>Uji Mode Layar Penuh</span>
@@ -379,7 +379,7 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
                             ...customization,
                             guestRecipientName: guestName,
                           });
-                          onLaunchGuestExperience();
+                          onLaunchGuestExperience(guestName);
                         }}
                         className="px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-medium flex items-center gap-1 cursor-pointer transition-colors ml-auto shadow-2xs"
                       >

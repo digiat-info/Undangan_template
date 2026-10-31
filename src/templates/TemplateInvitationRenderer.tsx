@@ -464,8 +464,8 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
                   <p className="font-semibold uppercase tracking-wider">{custom.weddingDateDisplay}</p>
                   <p style={{ color: palette.mutedText }}>{custom.city}</p>
                 </div>
-                <span style={{ color: palette.accent }} className="font-mono text-xs">
-                  {template.code}
+                <span style={{ color: palette.accent }} className="font-mono text-[10px] uppercase tracking-widest font-semibold">
+                  OFFICIAL INVITATION
                 </span>
               </div>
             </div>

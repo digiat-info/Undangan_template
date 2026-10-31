@@ -14,7 +14,8 @@ interface FloatingCeremonyAudioPlayerProps {
   activeSuite: AdatSuite;
   isPlaying: boolean;
   onTogglePlay: () => void;
-  onSelectSuiteMusic: (suite: AdatSuite) => void;
+  onSelectSuiteMusic?: (suite: AdatSuite) => void;
+  hideTrackSelector?: boolean;
 }
 
 export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerProps> = ({
@@ -22,6 +23,7 @@ export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerPr
   isPlaying,
   onTogglePlay,
   onSelectSuiteMusic,
+  hideTrackSelector = false,
 }) => {
   const [showTrackSelector, setShowTrackSelector] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -45,7 +47,7 @@ export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerPr
   return (
     <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col items-end">
       {/* Expandable Traditional Music Ensemble Selector */}
-      {showTrackSelector && (
+      {!hideTrackSelector && showTrackSelector && (
         <div className="mb-2.5 w-72 sm:w-80 bg-white border border-slate-200 rounded-2xl p-4 shadow-2xl text-slate-900 transition-all">
           <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-100">
             <div>
@@ -74,7 +76,9 @@ export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerPr
                   key={suite.id}
                   type="button"
                   onClick={() => {
-                    onSelectSuiteMusic(suite);
+                    if (onSelectSuiteMusic) {
+                      onSelectSuiteMusic(suite);
+                    }
                     setShowTrackSelector(false);
                   }}
                   className={`w-full text-left px-3 py-2 rounded-xl border transition-colors flex items-center justify-between gap-2 cursor-pointer ${
@@ -118,8 +122,14 @@ export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerPr
         {/* Track Metadata & Soundwave */}
         <button
           type="button"
-          onClick={() => setShowTrackSelector((prev) => !prev)}
-          className="flex items-center gap-3 text-left pr-1 cursor-pointer group"
+          onClick={() => {
+            if (!hideTrackSelector) {
+              setShowTrackSelector((prev) => !prev);
+            }
+          }}
+          className={`flex items-center gap-3 text-left pr-1 ${
+            hideTrackSelector ? 'cursor-default' : 'cursor-pointer group'
+          }`}
         >
           <div className="min-w-0 max-w-[145px] sm:max-w-[190px]">
             <div className="flex items-center gap-1.5">
@@ -153,11 +163,13 @@ export const FloatingCeremonyAudioPlayer: React.FC<FloatingCeremonyAudioPlayerPr
             ))}
           </div>
 
-          <ChevronUp
-            className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
-              showTrackSelector ? 'rotate-180' : ''
-            }`}
-          />
+          {!hideTrackSelector && (
+            <ChevronUp
+              className={`w-3.5 h-3.5 text-slate-400 transition-transform ${
+                showTrackSelector ? 'rotate-180' : ''
+              }`}
+            />
+          )}
         </button>
 
         {/* Mute / Unmute Button */}
