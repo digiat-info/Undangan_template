@@ -1,0 +1,254 @@
+---
+name: RuangJanji Design System
+colors:
+  surface: '#fcf9f2'
+  surface-dim: '#dcdad3'
+  surface-bright: '#fcf9f2'
+  surface-container-lowest: '#ffffff'
+  surface-container-low: '#f6f3ec'
+  surface-container: '#f0eee7'
+  surface-container-high: '#ebe8e1'
+  surface-container-highest: '#e5e2db'
+  on-surface: '#1c1c18'
+  on-surface-variant: '#4d463b'
+  inverse-surface: '#31312c'
+  inverse-on-surface: '#f3f0ea'
+  outline: '#7f7669'
+  outline-variant: '#d0c5b6'
+  surface-tint: '#725b2f'
+  primary: '#725b2f'
+  on-primary: '#ffffff'
+  primary-container: '#b69a68'
+  on-primary-container: '#453209'
+  inverse-primary: '#e1c28d'
+  secondary: '#6a5b54'
+  on-secondary: '#ffffff'
+  secondary-container: '#f0dcd2'
+  on-secondary-container: '#6e6058'
+  tertiary: '#675d53'
+  on-tertiary: '#ffffff'
+  tertiary-container: '#a89c91'
+  on-tertiary-container: '#3c342c'
+  error: '#ba1a1a'
+  on-error: '#ffffff'
+  error-container: '#ffdad6'
+  on-error-container: '#93000a'
+  primary-fixed: '#ffdea7'
+  primary-fixed-dim: '#e1c28d'
+  on-primary-fixed: '#271900'
+  on-primary-fixed-variant: '#58431a'
+  secondary-fixed: '#f2dfd5'
+  secondary-fixed-dim: '#d6c3ba'
+  on-secondary-fixed: '#231914'
+  on-secondary-fixed-variant: '#51443d'
+  tertiary-fixed: '#eee0d4'
+  tertiary-fixed-dim: '#d2c4b9'
+  on-tertiary-fixed: '#211a13'
+  on-tertiary-fixed-variant: '#4e453c'
+  background: '#fcf9f2'
+  on-background: '#1c1c18'
+  surface-variant: '#e5e2db'
+typography:
+  display-lg:
+    fontFamily: EB Garamond
+    fontSize: 56px
+    fontWeight: '400'
+    lineHeight: 64px
+    letterSpacing: -0.01em
+  display-lg-mobile:
+    fontFamily: EB Garamond
+    fontSize: 36px
+    fontWeight: '400'
+    lineHeight: 44px
+    letterSpacing: '0'
+  display-md:
+    fontFamily: EB Garamond
+    fontSize: 44px
+    fontWeight: '400'
+    lineHeight: 52px
+    letterSpacing: -0.005em
+  display-md-mobile:
+    fontFamily: EB Garamond
+    fontSize: 30px
+    fontWeight: '400'
+    lineHeight: 38px
+    letterSpacing: '0'
+  headline-lg:
+    fontFamily: EB Garamond
+    fontSize: 32px
+    fontWeight: '500'
+    lineHeight: 40px
+    letterSpacing: '0'
+  headline-md:
+    fontFamily: EB Garamond
+    fontSize: 26px
+    fontWeight: '500'
+    lineHeight: 34px
+    letterSpacing: 0.01em
+  headline-sm:
+    fontFamily: EB Garamond
+    fontSize: 20px
+    fontWeight: '600'
+    lineHeight: 28px
+    letterSpacing: 0.01em
+  body-lg:
+    fontFamily: Inter
+    fontSize: 18px
+    fontWeight: '400'
+    lineHeight: 28px
+    letterSpacing: '0'
+  body-md:
+    fontFamily: Inter
+    fontSize: 15px
+    fontWeight: '400'
+    lineHeight: 24px
+    letterSpacing: '0'
+  body-sm:
+    fontFamily: Inter
+    fontSize: 13px
+    fontWeight: '400'
+    lineHeight: 20px
+    letterSpacing: 0.01em
+  label-lg:
+    fontFamily: Inter
+    fontSize: 14px
+    fontWeight: '500'
+    lineHeight: 20px
+    letterSpacing: 0.02em
+  label-md:
+    fontFamily: Inter
+    fontSize: 12px
+    fontWeight: '500'
+    lineHeight: 16px
+    letterSpacing: 0.04em
+  label-caps:
+    fontFamily: Inter
+    fontSize: 11px
+    fontWeight: '600'
+    lineHeight: 16px
+    letterSpacing: 0.12em
+rounded:
+  sm: 0.125rem
+  DEFAULT: 0.25rem
+  md: 0.375rem
+  lg: 0.5rem
+  xl: 0.75rem
+  full: 9999px
+spacing:
+  gutter: 1.5rem
+  gutter-mobile: 1rem
+  margin: 3rem
+  margin-mobile: 1.25rem
+  space-xs: 0.25rem
+  space-sm: 0.5rem
+  space-md: 1rem
+  space-lg: 1.5rem
+  space-xl: 2.5rem
+  space-2xl: 4rem
+---
+
+## Brand & Style
+
+This design system translates the timeless ceremonial gravity of Indonesian matrimonial traditions into a high-end digital invitation marketplace. It bridges archival reverence with modern editorial elegance, echoing physical bespoke stationery—tactile cotton paper, gold foil stamping, and heirloom botanical motifs.
+
+### Target Audience & Emotional Response
+The experience caters to contemporary couples, wedding planners, and cultural artisans seeking invitations that honor regional heritage (Javanese, Minang, Balinese, Sundanese, Batak, Bugis) without falling into cliché or dated visual tropes. The UI must evoke:
+- **Sacred reverence & warmth:** A sense of unhurried celebration, solemn vows (*janji*), and kinship.
+- **Bespoke luxury:** The tactile prestige of bespoke letterpress and archival printing.
+- **Effortless clarity:** Modern utilitarian precision for RSVP tracking, music control, digital envelopes, and gift registries.
+
+### Visual Aesthetic
+The overarching style is an **Editorial Heritage Minimalist** system accented by **Fine Stationery Tactility**. 
+- Generous breathing space and disciplined margins.
+- Slender architectural lines mimicking scoring and debossing.
+- Restrained metallic accents evocative of champagne leafing rather than synthetic gloss.
+- Balanced duality: luminous ivory daytime surfaces paired with rare, deep espresso ceremonial panels for evening showcases.
+
+## Colors
+
+The palette is derived from raw hand-spun silk, aged lontar leaves, untreated stone temple courtyards, and aged brass heirloom jewelry (*perhiasan kuno*).
+
+### Functional Color Roles
+- **Primary Canvas (`#FAF7F0`):** Warm Ivory. Serves as the primary app and marketplace background, replacing cold clinical whites with an organic, linen-washed baseline.
+- **Surface Elevation (`#FFFFFF`):** Pure White. Reserved for elevated stationery cards, invitation sheets, dialogue modals, and dropdown overlays.
+- **Primary Text & Structure (`#30251F`):** Deep Espresso. Used for editorial typography, high-priority icons, and primary state boundaries. Replaces pure black (`#000000`) entirely to maintain warmth.
+- **Secondary & Auxiliary Text (`#82776D`):** Muted Taupe. Applied to metadata, breadcrumbs, sub-labels, input helper text, and secondary navigation elements.
+- **Accent & Metallics (`#B69A68`):** Antique Champagne Gold. Applied to focused states, primary action buttons, ceremonial badge outlines, active filter pills, and ornamental separators.
+- **Borders & Rules (`#E8E0D4`):** Soft Warm Beige. Used for fine hairline separators (1px), subtle structural frames, and inactive card borders.
+- **Ceremonial Dark Surface (`#30251F`):** Deep Espresso backdrop for high-contrast nighttime viewings, premium vendor showcases, and full-bleed RSVP confirmation envelopes.
+
+## Typography
+
+The typographic hierarchy relies on a strict distinction: **EB Garamond** acts as the ceremonial voice—timeless, lyrical, and editorial—while **Inter** serves as the functional operational layer for commerce, metadata, and configuration tools.
+
+### Usage Principles
+- **Ceremonial Titles & Poetic Accents (`EB Garamond`):** Used exclusively for bride and groom names, event titles, cultural suite names (*Surakarta Royal, Suntiang Minang*), and editorial quotes. Headings feature natural tracking; display italics can be used for secondary honorific phrases.
+- **Product & System Text (`Inter`):** Applied to pricing, guest lists, filter bars, date-time selectors, and administrative settings. The generous x-height ensures readability on micro-screens and mobile browsers.
+- **Tracked Small Caps (`label-caps`):** Applied to category pill headers, cultural tags (e.g., `ADAT JAWA`, `SIRAMAN`, `PEMBERKATAN`), and ceremonial chapter indicators.
+
+## Layout & Spacing
+
+The layout philosophy mirrors editorial broadsheets and artisanal wedding suites, balancing strict structural discipline with open negative space.
+
+### Grid Framework
+- **Desktop (1200px+):** 12-column fluid grid. Outer margins are generous (`3rem` to `5rem`), framing the canvas like an envelope matting. Column gutter is `1.5rem`.
+- **Tablet (768px – 1199px):** 8-column grid with `2rem` outer margins and `1.25rem` gutters.
+- **Mobile (< 768px):** 4-column layout prioritizing vertical single-column card flows. Canvas margin compresses to `1.25rem` (`margin-mobile`), with gutters reduced to `1rem` (`gutter-mobile`).
+
+### Spacing Principles
+- Avoid claustrophobic layouts; cards holding invitation previews must maintain an aspect ratio close to standard envelope proportions (typically `1:1.414` or `4:5`).
+- Content sections are spaced using `space-2xl` (`4rem`) to allow deliberate visual pauses between invitation discovery, customizer controls, and pricing tiers.
+
+## Elevation & Depth
+
+Visual depth avoids heavy dropshadows or glossy 3D renders. Depth is established through **physical stationery layering**, **matte diffused ambient lighting**, and **crisp hairline borders**.
+
+### The Layering Stack
+1. **Base Foundation (`#FAF7F0`):** The primary linen ground.
+2. **Stationery Cards (`#FFFFFF`):** Cast a warm, extremely subtle halo shadow tinted with Deep Espresso:
+   - `0 1px 3px rgba(48, 37, 31, 0.04), 0 8px 24px rgba(48, 37, 31, 0.06)`
+3. **Elevated Modals & Filter Flyouts (`#FFFFFF`):**
+   - `0 12px 40px rgba(48, 37, 31, 0.09)` accompanied by a 1px border of Antique Gold at 35% opacity (`rgba(182, 154, 104, 0.35)`).
+4. **Debossed / Inset Wells:** Input fields, audio players, and guest entry lists feature a recessed 1px perimeter border in `#E8E0D4` on `#FAF7F0` without inward blur, preserving paper-flatness.
+
+### Hairline Rules & Frame Insets
+Cards frequently employ an internal inset border (e.g., 4px padding inside the card edge with a 1px `#E8E0D4` or `#B69A68` outline), evoking hot-pressed letterpress borders.
+
+## Shapes
+
+The geometric identity relies on soft, tailored corners (`roundedness: 1`). Elements favor gentle radii (4px for inputs and chips; 6px–8px for large invitation display frames).
+
+### Form Logic
+- **Cards & Canvases:** 4px to 8px border-radius, reinforcing the precision of hand-trimmed archival cardstock rather than bubbly digital app surfaces.
+- **Action Buttons & Chips:** 4px radius.
+- **Ornamental Motif Frames:** Archways (*gapura/candi* inspired top arches) can be selectively used on preview cards: standard flat bottom with an arched circular top (`border-top-left-radius: 9999px`, `border-top-right-radius: 9999px`).
+- **Dividers & Motifs:** Delicate geometric diamond flourishes (`◆`) or slender botanical filigree lines in `#B69A68` at 0.75px stroke.
+
+## Components
+
+### Buttons
+- **Primary Action (The Gold Seal):** Background `#B69A68`, text `#FFFFFF`, border none, 4px border-radius. Hover: `#A58957` with subtle warm glow. Padding: `12px 24px`. Letter-spacing: `0.04em`.
+- **Secondary (The Archival Outline):** Background transparent, border 1px solid `#30251F`, text `#30251F`. Hover: Background `#30251F`, text `#FAF7F0`.
+- **Tertiary / Text:** Deep Espresso text with subtle underline in Antique Champagne Gold (`#B69A68`).
+
+### Cultural Badges & Filter Chips
+- **Category & Adat Chips:** Background `#FFFFFF`, border 1px solid `#E8E0D4`, text `#82776D`, typography `label-caps`. 
+- **Active State:** Background `#FAF7F0`, border 1px solid `#B69A68`, text `#30251F`, with an optional mini-diamond indicator (`◆`).
+
+### Cards (Invitation Previews)
+- Background pure `#FFFFFF`.
+- 1px border `#E8E0D4`.
+- Padding: `space-md` to `space-lg`.
+- Inner stationery framing: A nested inset container with an ultra-thin border (`#E8E0D4` or 20% `#B69A68`) creates an artisanal double-matting illusion.
+- Hover state: Elevation shifts upward by 2px with champagne gold border transition (`#B69A68`).
+
+### Input Fields & Controls
+- **Text Inputs:** Background `#FFFFFF`, 1px border `#E8E0D4`, 4px border-radius, label in `label-md` (`#82776D`).
+- **Focus State:** 1px border `#B69A68`, with an offset focus ring in 15% opacity champagne gold.
+- **Checkboxes & Radios:** Sharp, understated squares or circles with a 1.5px border `#82776D`. Selected state: `#30251F` or `#B69A68` solid fill with ivory checkmark.
+
+### Domain-Specific Components
+- **Nusantara Motif Divider:** A centered vector ornament (e.g., stylized Kawung, Songket diamond, or Balinese Patra) rendered in `#B69A68` flanked by two 1px gradient rules fading into `#FAF7F0`.
+- **Floating Ceremony Audio Player:** Pill container in `#FFFFFF` with 1px border in `#E8E0D4`, housing play/pause, track title (Gamelan, Acoustic String), and animated soundwave in `#B69A68`.
+- **Digital Envelope & Seal:** Ceremonial modal mimicking an opening envelope flap, complete with an antique wax seal badge (`#B69A68` debossed motif).
+- **RSVP & Angpao (Gift) Drawer:** A structured form drawer featuring bank copy-to-clipboard modules and QRIS payment containers framed in soft warm beige.

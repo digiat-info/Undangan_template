@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-serif: 'EB Garamond', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #F8FAFC;
+    color: #0F172A;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif-ceremonial {
+    font-family: var(--font-serif);
+  }
+}
+
+@keyframes swayGunungan {
+  0%, 100% {
+    transform: rotate(-2.5deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(2.5deg) translateY(-4px);
+  }
+}
+
+@keyframes swayGununganReverse {
+  0%, 100% {
+    transform: rotate(2.5deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-2.5deg) translateY(-4px);
+  }
+}
+
+@keyframes floatPetal {
+  0% {
+    transform: translateY(-10%) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.65;
+  }
+  85% {
+    opacity: 0.65;
+  }
+  100% {
+    transform: translateY(110vh) translateX(45px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pulseSeal {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes soundwaveBar {
+  0%, 100% {
+    transform: scaleY(0.35);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes slowSpinMotif {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wishPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(14px);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.02) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-wish-pop {
+  animation: wishPopIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-gunungan {
+  animation: swayGunungan 7s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.animate-gunungan-reverse {
+  animation: swayGununganReverse 7.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.animate-seal {
+  animation: pulseSeal 3.2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: slowSpinMotif 36s linear infinite;
+}
+
+.stationery-shadow {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.modal-shadow {
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.1);
+}
+
+/* Custom subtle scrollbars for preview containers */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F8FAFC;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* =====================================================================
+   CULTURAL ORNAMENT & ANIMATED MOTIF KEYFRAMES (BATIK, JOGLO, GONJONG)
+   ===================================================================== */
+@keyframes culturePulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+@keyframes cultureDrift {
+  0% {
+    transform: translate(0px, 0px);
+  }
+  50% {
+    transform: translate(8px, -6px);
+  }
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes cultureSway {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(-3px);
+  }
+}
+
+@keyframes cultureSwayReverse {
+  0%, 100% {
+    transform: scaleX(-1) rotate(1.5deg) translateY(0);
+  }
+  50% {
+    transform: scaleX(-1) rotate(-1.5deg) translateY(-3px);
+  }
+}
+
+@keyframes cultureFloatUp {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(650px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cultureSpinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cultureBloomScale {
+  0%, 100% {
+    transform: scale(0.96);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+
+.animate-culture-pulse {
+  animation: culturePulse 8s ease-in-out infinite;
+}
+
+.animate-culture-drift {
+  animation: cultureDrift 16s ease-in-out infinite;
+}
+
+.animate-culture-sway {
+  animation: cultureSway 9s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-culture-sway-reverse {
+  animation: cultureSwayReverse 9s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+.animate-culture-float {
+  animation: cultureFloatUp 18s linear infinite;
+}
+
+.animate-culture-spin {
+  animation: cultureSpinSlow 32s linear infinite;
+  transform-origin: center center;
+}
+
+.animate-culture-bloom {
+  animation: cultureBloomScale 6s ease-in-out infinite;
+  transform-origin: bottom center;
+}

@@ -1,0 +1,6 @@
+{
+  "name": "RuangJanji — Undangan Digital Adat Nusantara",
+  "description": "Platform dan pengalaman undangan pernikahan digital adat Nusantara (Jawa, Minang, Bali, Sunda, Batak, Bugis) dengan animasi ornamen adat interaktif dan musik tradisional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
