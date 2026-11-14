@@ -9,6 +9,12 @@ class AdatAudioEngine {
   private masterGain: GainNode | null = null;
   private volume: number = 0.65;
 
+  // Custom MP3 Audio Element
+  private audioElement: HTMLAudioElement | null = null;
+  private isCustomMode: boolean = false;
+  private customTitle: string = '';
+  private customArtist: string = '';
+
   private ensureContext(): AudioContext {
     if (!this.ctx) {
       const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -28,6 +34,9 @@ class AdatAudioEngine {
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setTargetAtTime(this.volume, this.ctx.currentTime, 0.05);
     }
+    if (this.audioElement) {
+      this.audioElement.volume = this.volume;
+    }
   }
 
   public getVolume(): number {
@@ -36,6 +45,54 @@ class AdatAudioEngine {
 
   public getIsPlaying(): boolean {
     return this.isPlaying;
+  }
+
+  public getAudioMode(): { isCustom: boolean; title: string; artist: string } {
+    return {
+      isCustom: this.isCustomMode,
+      title: this.isCustomMode ? this.customTitle : (this.currentSuite?.musicTrack.title || 'Musik Pernikahan'),
+      artist: this.isCustomMode ? this.customArtist : (this.currentSuite?.musicTrack.ensemble || 'Adat Tradisional'),
+    };
+  }
+
+  /**
+   * Play custom uploaded MP3 audio (with loop & volume control)
+   */
+  public playCustomAudio(url: string, title = 'Lagu Pilihan Pengantin', artist = 'Custom Audio') {
+    // Stop traditional synth first
+    if (this.timerId !== null) {
+      window.clearInterval(this.timerId);
+      this.timerId = null;
+    }
+
+    if (!this.audioElement) {
+      this.audioElement = new Audio();
+    }
+
+    this.audioElement.src = url;
+    this.audioElement.loop = true;
+    this.audioElement.volume = this.volume;
+    this.customTitle = title;
+    this.customArtist = artist;
+    this.isCustomMode = true;
+
+    this.audioElement.play().then(() => {
+      this.isPlaying = true;
+    }).catch(() => {
+      // Audio playback blocked until user interacts with document
+      this.isPlaying = false;
+    });
+  }
+
+  /**
+   * Stop custom uploaded MP3 audio
+   */
+  public stopCustomAudio() {
+    if (this.audioElement) {
+      this.audioElement.pause();
+      this.audioElement.currentTime = 0;
+    }
+    this.isCustomMode = false;
   }
 
   /**
@@ -217,8 +274,12 @@ class AdatAudioEngine {
   }
 
   public start(suite: AdatSuite) {
+    // If custom audio was playing, stop it
+    this.stopCustomAudio();
+
     this.ensureContext();
     this.currentSuite = suite;
+    this.isCustomMode = false;
 
     if (this.timerId !== null) {
       window.clearInterval(this.timerId);
@@ -271,6 +332,9 @@ class AdatAudioEngine {
     if (this.timerId !== null) {
       window.clearInterval(this.timerId);
       this.timerId = null;
+    }
+    if (this.audioElement) {
+      this.audioElement.pause();
     }
   }
 

@@ -253,3 +253,84 @@
   animation: cultureBloomScale 6s ease-in-out infinite;
   transform-origin: bottom center;
 }
+
+/* =====================================================================
+   HERO SHINE & GRID (SMS-SINDANGHEULA INSPIRED)
+   ===================================================================== */
+@keyframes shine-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes hero-float-gentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes hero-float-gentle-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+}
+
+.public-hero-grid {
+  background-image: 
+    linear-gradient(to right, rgba(167, 19, 102, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(167, 19, 102, 0.06) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+}
+
+.animate-hero-shine {
+  background-image: linear-gradient(
+    110deg,
+    #0f172a 32%,
+    #79124e 44%,
+    #ffffff 50%,
+    #a71366 56%,
+    #0f172a 68%
+  );
+  color: transparent;
+  background-repeat: repeat;
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine-sweep 4s linear infinite;
+  display: inline;
+}
+
+.animate-hero-shine-magenta {
+  background-image: linear-gradient(
+    110deg,
+    #79124e 30%,
+    #a71366 43%,
+    #ffffff 50%,
+    #c026d3 57%,
+    #79124e 70%
+  );
+  color: transparent;
+  background-repeat: repeat;
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shine-sweep 3.5s linear infinite;
+  display: inline;
+}
+
+.animate-hero-float {
+  animation: hero-float-gentle 6s ease-in-out infinite;
+}
+
+.animate-hero-float-reverse {
+  animation: hero-float-gentle-reverse 7s ease-in-out infinite;
+}

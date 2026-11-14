@@ -31,6 +31,18 @@ export class InvitationController {
     });
   }
 
+  static playCustomizationAudio(custom: ClientCustomization) {
+    if (custom.audioConfig?.customMp3Url) {
+      adatAudio.playCustomAudio(
+        custom.audioConfig.customMp3Url,
+        custom.audioConfig.customMp3Title || 'Lagu Pernikahan',
+        custom.audioConfig.customMp3Artist || 'Pilihan Pengantin'
+      );
+    } else {
+      this.playTemplateAudio(custom.templateId);
+    }
+  }
+
   static ringTemplateGong(id: TemplateId) {
     const tpl = getTemplateById(id);
     adatAudio.playCeremonialGong(tpl.musicConfig.droneHz);

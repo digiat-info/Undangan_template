@@ -25,6 +25,7 @@ import {
   TemplateSectionDivider,
 } from './CulturalOrnaments';
 import { AnimatedCulturalBg } from '../components/AnimatedCulturalBg';
+import { ParallaxAssetLayer } from '../components/ParallaxAssetLayer';
 import { InvitationController } from '../controllers/invitation.controller';
 
 interface TemplateInvitationRendererProps {
@@ -212,13 +213,12 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
             />
           </div>
 
-          {/* Authentic Javanese Royal Damask & Carved Border Wallpaper */}
-          {template.id === 'javanese-royal' && (
-            <div
-              className="absolute inset-0 pointer-events-none opacity-15 bg-cover bg-bottom mix-blend-luminosity z-0"
-              style={{ backgroundImage: 'url(/assets/motif_jawa/6541342_1560.jpg)' }}
-            />
-          )}
+          {/* Dynamic Parallax Asset Layer (Batik / Wallpaper Texture & Corner Motifs) */}
+          <ParallaxAssetLayer
+            assetConfig={custom.assetConfig}
+            accentColor={palette.accent}
+            isCoverSealed={true}
+          />
 
           {/* Dynamic Animated Cultural Motif Background (Batik, Gonjong, Siger, etc.) */}
           <div className="absolute inset-0 pointer-events-none z-0">
@@ -334,19 +334,12 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
           style={{ borderColor: palette.border }}
           className="m-2 sm:m-4 border rounded-[6px] overflow-hidden relative"
         >
-          {/* Authentic Javanese Royal Mandala Pillar Side Borders */}
-          {template.id === 'javanese-royal' && (
-            <>
-              <div
-                className="absolute top-0 bottom-0 left-0 w-8 pointer-events-none opacity-[0.06] bg-repeat-y bg-contain z-0"
-                style={{ backgroundImage: 'url(/assets/motif_jawa/spanduk-mandala-abstrak.png)' }}
-              />
-              <div
-                className="absolute top-0 bottom-0 right-0 w-8 pointer-events-none opacity-[0.06] bg-repeat-y bg-contain scale-x-[-1] z-0"
-                style={{ backgroundImage: 'url(/assets/motif_jawa/spanduk-mandala-abstrak.png)' }}
-              />
-            </>
-          )}
+          {/* Dynamic Parallax Asset Layer (Ambient wallpaper, side pillars, corner motifs) */}
+          <ParallaxAssetLayer
+            assetConfig={custom.assetConfig}
+            accentColor={palette.accent}
+            isCoverSealed={false}
+          />
           {/* Top Utility Strip inside Invitation (Re-open Cover & Music Control) */}
           <div
             style={{
@@ -387,7 +380,11 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
                 className="px-2.5 py-1 rounded-[3px] border text-[11px] flex items-center gap-1 cursor-pointer whitespace-nowrap"
               >
                 <Volume2 className="w-3 h-3" />
-                <span>{isPlayingAudio ? 'Musik On' : 'Putar Musik'}</span>
+                <span className="truncate max-w-[140px]">
+                  {isPlayingAudio
+                    ? (custom.audioConfig?.customMp3Title ? `Lagu: ${custom.audioConfig.customMp3Title}` : 'Musik On')
+                    : 'Putar Musik'}
+                </span>
               </button>
             </div>
           </div>
@@ -657,6 +654,7 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
           templateId={template.id}
           color={palette.accent}
           borderColor={palette.border}
+          customIconUrl={custom.assetConfig?.dividerOrnamentUrl}
         />
 
         {/* ===================================================================
@@ -803,6 +801,7 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
           templateId={template.id}
           color={palette.accent}
           borderColor={palette.border}
+          customIconUrl={custom.assetConfig?.dividerOrnamentUrl}
         />
 
         {/* ===================================================================
@@ -925,6 +924,7 @@ export const TemplateInvitationRenderer: React.FC<TemplateInvitationRendererProp
           templateId={template.id}
           color={palette.accent}
           borderColor={palette.border}
+          customIconUrl={custom.assetConfig?.dividerOrnamentUrl}
         />
 
         {/* ===================================================================

@@ -9,11 +9,6 @@ import {
   Send,
   Sparkles,
   Smartphone,
-  Gift,
-  Music,
-  Palette,
-  ShieldCheck,
-  Award,
   Link as LinkIcon,
   Plus,
   Trash2,
@@ -25,6 +20,8 @@ import {
   TemplateSchema,
 } from '../models/invitation.model';
 import { GuestWish } from '../data/adatSuites';
+import { ClientSubscription } from '../models/saas.model';
+import { SaasController } from '../controllers/saas.controller';
 
 interface PublishingDashboardViewProps {
   template: TemplateSchema;
@@ -33,6 +30,7 @@ interface PublishingDashboardViewProps {
   wishes: GuestWish[];
   onLaunchGuestExperience: (guestName?: string) => void;
   onOpenMobileSimulator: () => void;
+  subscription?: ClientSubscription;
 }
 
 export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = ({
@@ -42,8 +40,14 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
   wishes,
   onLaunchGuestExperience,
   onOpenMobileSimulator,
+  subscription,
 }) => {
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Feature gating
+  const isFreeTier = subscription?.tier === 'free';
+  const canPersonalizeGuests = subscription?.allowPersonalizedGuests !== false;
+
   const [singleGuestInput, setSingleGuestInput] = useState<string>('');
   const [guestListInput, setGuestListInput] = useState<string>(
     'Bapak K.R.T. Wuryanto & Ibu\nDr. Hendra Wijaya, Sp.OG\nKeluarga Besar Datuk Rajo Endah\nSahabat Terbaik Alumni Kampus'
@@ -79,56 +83,71 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
   };
 
   const generateGuestLink = (guestName: string) => {
-    return `${baseUrl}/?template=${template.id}&to=${encodeURIComponent(guestName)}&demo=true`;
+    return SaasController.generateGuestUrl(baseUrl, template.id, guestName);
   };
 
   const generateGuestWaText = (guestName: string) => {
     const link = generateGuestLink(guestName);
-    return `Kepada Yth. Bapak/Ibu/Saudara/i\n*${guestName}*\n\nTanpa mengurangi rasa hormat, perkenankan kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri acara pernikahan putra-putri kami:\n\n*${customization.groomShort} & ${customization.brideShort}*\n\nBerikut tautan undangan digital resmi untuk membuka sampul & rincian acara:\n${link}\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila berkenan hadir dan memberikan doa restu.\n\nTerima kasih.`;
+    return SaasController.generateGuestWhatsAppText({
+      guestName,
+      groomShort: customization.groomShort,
+      brideShort: customization.brideShort,
+      guestUrl: link,
+    });
   };
 
   const pricingPackages = [
     {
-      name: 'Paket Silver',
-      price: 'Rp 450.000',
-      badge: 'Esensial',
-      description: 'Cocok untuk pesta pernikahan intim atau resepsi sederhana.',
+      name: 'Paket Starter',
+      price: 'Rp 39.000',
+      originalPrice: 'Rp 89.000',
+      badge: 'Hemat',
+      description: 'Undangan digital premium lengkap dengan audio adat dan RSVP online. Sekali bayar, aktif selamanya.',
       features: [
-        '1 Template Desain Pilihan',
-        'Kustomisasi Teks & Lokasi Acara',
-        'Penghitung Waktu Mundur & Google Maps',
-        'Kapasitas hingga 300 Tamu',
-        'Hosting Cepat di Vercel CDN',
+        'Pilihan 1 Template Adat / Modern',
+        'Kustomisasi Teks, Nama Mempelai & Acara',
+        'Nama Tamu Personal Unlimited (?to=Nama)',
+        'Buku Tamu Doa Restu & RSVP Real-time',
+        'Navigasi Peta Google Maps Lokasi Acara',
+        'Audio Musik Adat & Lagu Pilihan',
+        'Amplop Digital Rekening Bank Transfer',
+        'Aktif Selamanya Tanpa Batas Waktu',
       ],
       recommended: false,
     },
     {
-      name: 'Paket Gold',
-      price: 'Rp 750.000',
-      badge: 'Paling Populer',
-      description: 'Pilihan favorit calon pengantin dengan fitur seremonial lengkap.',
+      name: 'Paket Premium',
+      price: 'Rp 99.000',
+      originalPrice: 'Rp 199.000',
+      badge: 'Paling Populer ⭐',
+      description: 'Bebas ganti 6 tema adat, upload foto prewedding unlimited & QRIS cashless. Sekali bayar, aktif selamanya.',
       features: [
-        'Semua Fitur Paket Silver',
-        'Musik Tradisional Adat (Web Audio Synth)',
-        'Kustomisasi Palet Warna (HEX Kebaya Bebas)',
-        'Buku Tamu Doa Restu & Konfirmasi Kehadiran',
-        'Amplop Digital & QRIS Terverifikasi',
-        'Animasi Kelopak Bunga & Segel Lilin Eksklusif',
+        'Semua Fitur Paket Starter',
+        'Bebas Pilih & Ganti Antar 6 Template Adat/Modern',
+        'Generator Draf Pesan Kirim WhatsApp Otomatis',
+        'Upload Foto Prewedding, Galeri Cinta & Cerita Kasih',
+        'Efek Animasi Parallax & Ornamen Budaya Mewah',
+        'Amplop Digital QRIS Dinamis & Multi-Rekening',
+        'Hitung Mundur (Countdown Timer) Menuju Hari H',
+        'Bebas Watermark DIGIAT Studio',
       ],
       recommended: true,
     },
     {
-      name: 'Paket Royal Platinum',
-      price: 'Rp 1.250.000',
-      badge: 'Eksklusif VIP',
-      description: 'Pengalaman adat bangsawan lengkap dengan pendampingan penuh.',
+      name: 'Paket VIP Terima Beres',
+      price: 'Rp 299.000',
+      originalPrice: 'Rp 500.000',
+      badge: 'Layanan Eksklusif',
+      description: 'Terima beres, seluruh desain dikerjakan tim desainer DIGIAT. Sekali bayar, aktif selamanya.',
       features: [
-        'Semua Fitur Paket Gold',
-        'Desain Monogram Nama Pasangan di Ornamen',
-        'Galeri Foto Prewedding & Love Story Timeline',
-        'Dukungan Personalisasi Ribuan Tamu Tanpa Batas',
-        'Broadcast Generator Pesan WhatsApp Otomatis',
-        'Prioritas Revisi Desain 24 Jam',
+        'Semua Fitur Paket Premium Self-Service',
+        'Dikerjakan Langsung oleh Desainer Senior DIGIAT',
+        'Cukup Kirim Foto & Data Acara via WhatsApp',
+        'Bantuan Format & Input Ribuan Tamu dari Excel/WA',
+        'Finishing Ornamen AI Khusus & Monogram Elegan',
+        'Prioritas Pengerjaan Kilat 24 Jam Selesai',
+        'Garansi Revisi Desain Hingga Puas',
+        'Konsultasi Langsung via WhatsApp Desainer',
       ],
       recommended: false,
     },
@@ -236,6 +255,18 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: Quick Add Single Guest & Bulk Area */}
           <div className="lg:col-span-5 space-y-4">
+              {!canPersonalizeGuests && (
+                <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-center space-y-2 mb-4">
+                  <span className="text-2xl">🔒</span>
+                  <h4 className="text-sm font-bold text-amber-800">Link Tamu Personal Terkunci</h4>
+                  <p className="text-xs text-amber-700">
+                    Paket Free hanya mendukung 1 link broadcast umum (Kepada: Tamu Undangan). Upgrade ke Pro untuk generate ribuan link nama tamu personal.
+                  </p>
+                  <span className="inline-block px-3 py-1 bg-amber-600 text-white rounded-lg text-xs font-semibold">
+                    Upgrade ke Paket Premium — Rp 99.000
+                  </span>
+                </div>
+              )}
             <form onSubmit={handleAddSingleGuest} className="space-y-2">
               <label className="block text-xs font-semibold tracking-wider uppercase text-slate-600">
                 + Tambah Tamu Cepat
@@ -438,8 +469,11 @@ export const PublishingDashboardView: React.FC<PublishingDashboardViewProps> = (
                   )}
                 </div>
                 <div className="mt-3">
+                  {'originalPrice' in pkg && (pkg as any).originalPrice && (
+                    <span className="font-mono text-lg text-slate-400 line-through mr-2">{(pkg as any).originalPrice}</span>
+                  )}
                   <span className="font-mono text-3xl font-bold text-slate-900">{pkg.price}</span>
-                  <span className="text-xs text-slate-500 ml-1">/ undangan</span>
+                  <span className="text-xs text-slate-500 ml-1">/ sekali bayar</span>
                 </div>
                 <p className="text-xs text-slate-600 mt-2 leading-relaxed">
                   {pkg.description}

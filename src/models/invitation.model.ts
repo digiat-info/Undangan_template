@@ -120,6 +120,27 @@ export interface TemplateSchema {
   };
 }
 
+export interface ParallaxAssetConfig {
+  enableParallax: boolean;
+  parallaxIntensity: 'subtle' | 'medium' | 'deep';
+  bgTextureUrl: string;
+  bgTextureOpacity: number; // e.g. 0.12
+  bgTextureBlendMode: 'luminosity' | 'overlay' | 'multiply' | 'normal' | 'soft-light';
+  cornerOrnamentUrl: string;
+  cornerOrnamentOpacity: number; // e.g. 0.85
+  sideBordersUrl: string;
+  dividerOrnamentUrl: string;
+  floatingMotifs: boolean;
+}
+
+export interface CustomAudioConfig {
+  sourceType: 'preset_synth' | 'custom_mp3';
+  customMp3Url?: string; // Data URL or remote HTTPS URL
+  customMp3Title?: string; // e.g. "Kisah Romantis"
+  customMp3Artist?: string; // e.g. "Glenn Fredly"
+  autoPlay?: boolean;
+}
+
 export interface ClientCustomization {
   templateId: TemplateId;
   palette: ColorPalette;
@@ -147,4 +168,6 @@ export interface ClientCustomization {
   guestRecipientLocation: string;
   slug: string;
   events: ProcessionEventModel[];
+  assetConfig?: ParallaxAssetConfig;
+  audioConfig?: CustomAudioConfig;
 }

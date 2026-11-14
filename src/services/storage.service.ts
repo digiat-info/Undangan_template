@@ -1,13 +1,91 @@
-import { ClientCustomization, TemplateId } from '../models/invitation.model';
+import { ClientCustomization, ParallaxAssetConfig, TemplateId } from '../models/invitation.model';
 import { GuestWish, INITIAL_GUEST_WISHES } from '../data/adatSuites';
 import { getTemplateById } from '../data/templateRegistry';
 
 const STORAGE_KEYS = {
-  CUSTOMIZATIONS: 'digiat_client_customizations_v5',
+  CUSTOMIZATIONS: 'digiat_client_customizations_v6',
   WISHES: 'digiat_guest_wishes_v1',
 };
 
 export class StorageService {
+  static buildDefaultAssetConfig(templateId: TemplateId): ParallaxAssetConfig {
+    const assets: Record<TemplateId, ParallaxAssetConfig> = {
+      'javanese-royal': {
+        enableParallax: true,
+        parallaxIntensity: 'medium',
+        bgTextureUrl: '/assets/motif_jawa/6541342_1560.jpg',
+        bgTextureOpacity: 0.12,
+        bgTextureBlendMode: 'luminosity',
+        cornerOrnamentUrl: '/assets/motif_jawa/motif_jawa.png',
+        cornerOrnamentOpacity: 0.85,
+        sideBordersUrl: '/assets/motif_jawa/spanduk-mandala-abstrak.png',
+        dividerOrnamentUrl: '/assets/motif_jawa/motif_jawa.png',
+        floatingMotifs: true,
+      },
+      'sundanese-romance': {
+        enableParallax: true,
+        parallaxIntensity: 'subtle',
+        bgTextureUrl: '',
+        bgTextureOpacity: 0.10,
+        bgTextureBlendMode: 'overlay',
+        cornerOrnamentUrl: '',
+        cornerOrnamentOpacity: 0.80,
+        sideBordersUrl: '',
+        dividerOrnamentUrl: '',
+        floatingMotifs: true,
+      },
+      'minang-heritage': {
+        enableParallax: true,
+        parallaxIntensity: 'medium',
+        bgTextureUrl: '',
+        bgTextureOpacity: 0.14,
+        bgTextureBlendMode: 'multiply',
+        cornerOrnamentUrl: '',
+        cornerOrnamentOpacity: 0.90,
+        sideBordersUrl: '',
+        dividerOrnamentUrl: '',
+        floatingMotifs: true,
+      },
+      'balinese-sacred': {
+        enableParallax: true,
+        parallaxIntensity: 'medium',
+        bgTextureUrl: '',
+        bgTextureOpacity: 0.15,
+        bgTextureBlendMode: 'luminosity',
+        cornerOrnamentUrl: '',
+        cornerOrnamentOpacity: 0.85,
+        sideBordersUrl: '',
+        dividerOrnamentUrl: '',
+        floatingMotifs: true,
+      },
+      'islamic-elegance': {
+        enableParallax: true,
+        parallaxIntensity: 'subtle',
+        bgTextureUrl: '',
+        bgTextureOpacity: 0.10,
+        bgTextureBlendMode: 'overlay',
+        cornerOrnamentUrl: '',
+        cornerOrnamentOpacity: 0.80,
+        sideBordersUrl: '',
+        dividerOrnamentUrl: '',
+        floatingMotifs: true,
+      },
+      'modern-nusantara': {
+        enableParallax: true,
+        parallaxIntensity: 'subtle',
+        bgTextureUrl: '',
+        bgTextureOpacity: 0.08,
+        bgTextureBlendMode: 'overlay',
+        cornerOrnamentUrl: '',
+        cornerOrnamentOpacity: 0.70,
+        sideBordersUrl: '',
+        dividerOrnamentUrl: '',
+        floatingMotifs: false,
+      },
+    };
+    return assets[templateId] || assets['javanese-royal'];
+  }
+
   static buildDefaultCustomization(templateId: TemplateId): ClientCustomization {
     const tpl = getTemplateById(templateId);
     const d = tpl.defaultData;
@@ -43,6 +121,14 @@ export class StorageService {
       guestRecipientLocation: 'Di Tempat',
       slug,
       events: d.events.map((ev) => ({ ...ev })),
+      assetConfig: this.buildDefaultAssetConfig(tpl.id),
+      audioConfig: {
+        sourceType: 'preset_synth',
+        customMp3Url: '',
+        customMp3Title: tpl.musicConfig.title,
+        customMp3Artist: tpl.musicConfig.ensemble,
+        autoPlay: true,
+      },
     };
   }
 

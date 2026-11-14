@@ -258,7 +258,8 @@ export const TemplateSectionDivider: React.FC<{
   templateId: TemplateId;
   color: string;
   borderColor: string;
-}> = ({ templateId, color, borderColor }) => {
+  customIconUrl?: string;
+}> = ({ templateId, color, borderColor, customIconUrl }) => {
   return (
     <div className="flex items-center justify-center gap-4 my-8 select-none" aria-hidden="true">
       <div
@@ -268,35 +269,49 @@ export const TemplateSectionDivider: React.FC<{
         }}
       />
       <div className="flex items-center gap-2" style={{ color }}>
-        {templateId === 'minang-heritage' && (
-          <div className="flex items-center gap-1.5">
-            <span className="text-xs">◇</span>
-            <span className="text-sm">◆</span>
-            <span className="text-xs">◇</span>
-          </div>
-        )}
-        {templateId === 'islamic-elegance' && (
-          <span className="text-sm tracking-widest">۞</span>
-        )}
-        {templateId === 'sundanese-romance' && (
-          <span className="text-xs tracking-[0.2em]">❀ ◆ ❀</span>
-        )}
-        {templateId === 'balinese-sacred' && (
-          <span className="text-xs tracking-[0.15em]">❖ ☸ ❖</span>
-        )}
-        {templateId === 'javanese-royal' && (
+        {customIconUrl ? (
           <div className="flex items-center gap-2">
             <span className="text-[10px] opacity-70">◆</span>
             <img
-              src="/assets/motif_jawa/motif_jawa.png"
-              alt="Motif Batik Jawa"
+              src={customIconUrl}
+              alt="Motif Divider"
               className="w-7 h-7 object-contain drop-shadow"
             />
             <span className="text-[10px] opacity-70">◆</span>
           </div>
-        )}
-        {templateId === 'modern-nusantara' && (
-          <span className="text-[10px] tracking-[0.3em] uppercase font-mono">― ◆ ―</span>
+        ) : (
+          <>
+            {templateId === 'minang-heritage' && (
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs">◇</span>
+                <span className="text-sm">◆</span>
+                <span className="text-xs">◇</span>
+              </div>
+            )}
+            {templateId === 'islamic-elegance' && (
+              <span className="text-sm tracking-widest">۞</span>
+            )}
+            {templateId === 'sundanese-romance' && (
+              <span className="text-xs tracking-[0.2em]">❀ ◆ ❀</span>
+            )}
+            {templateId === 'balinese-sacred' && (
+              <span className="text-xs tracking-[0.15em]">❖ ☸ ❖</span>
+            )}
+            {templateId === 'javanese-royal' && (
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] opacity-70">◆</span>
+                <img
+                  src="/assets/motif_jawa/motif_jawa.png"
+                  alt="Motif Batik Jawa"
+                  className="w-7 h-7 object-contain drop-shadow"
+                />
+                <span className="text-[10px] opacity-70">◆</span>
+              </div>
+            )}
+            {templateId === 'modern-nusantara' && (
+              <span className="text-[10px] tracking-[0.3em] uppercase font-mono">― ◆ ―</span>
+            )}
+          </>
         )}
       </div>
       <div
