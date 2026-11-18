@@ -241,16 +241,19 @@ export default function App() {
     },
   };
 
-  // Handler to open guest experience cleanly in a new tab (or fallback to current tab if popup blocked)
-  const handleOpenGuestFullscreen = (guestName?: string) => {
-    const targetGuest = guestName || activeCustomization.guestRecipientName || 'Tamu Undangan';
-    const guestUrl = `/?template=${selectedTemplateId}&to=${encodeURIComponent(targetGuest)}&demo=true`;
-    const win = window.open(guestUrl, '_blank');
-    if (!win) {
-      setCoverResetCount((c) => c + 1);
-      setActiveTab('fullscreen-guest');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  // Handler to open guest experience cleanly for a specific template
+  const handleOpenGuestFullscreen = (targetTemplateId?: TemplateId, guestName?: string) => {
+    const chosenTemplateId = targetTemplateId || selectedTemplateId;
+    setSelectedTemplateId(chosenTemplateId);
+
+    // Stop landing page audio before entering preview
+    adatAudio.stop();
+    setIsPlayingAudio(false);
+
+    // Reset cover envelope and switch to immersive fullscreen guest view
+    setCoverResetCount((c) => c + 1);
+    setActiveTab('fullscreen-guest');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // ===================== SaaS Role Switching & Auth Handlers (via SaasController) =====================
@@ -288,10 +291,8 @@ export default function App() {
 
   const handleOpenClientInvitation = (slug: string, templateId: string) => {
     const validTemplate = TEMPLATE_REGISTRY.find((t) => t.id === templateId);
-    if (validTemplate) {
-      setSelectedTemplateId(validTemplate.id);
-    }
-    handleOpenGuestFullscreen('Tamu Undangan');
+    const chosen = validTemplate ? (validTemplate.id as TemplateId) : selectedTemplateId;
+    handleOpenGuestFullscreen(chosen, 'Tamu Undangan');
   };
 
   const handleOpenClientEditor = (templateId: TemplateId) => {
@@ -313,8 +314,8 @@ export default function App() {
       <div className="min-h-screen bg-slate-950 text-white relative">
         <FloatingPetalsOverlay active={showPetals} />
 
-        {/* Floating Back to Landing Page / Close Preview Button */}
-        <div className="fixed top-4 left-4 z-50">
+        {/* Floating Top Navigation Bar in Fullscreen Guest View */}
+        <div className="fixed top-4 inset-x-4 sm:inset-x-8 z-50 flex items-center justify-between pointer-events-none">
           <button
             type="button"
             onClick={() => {
@@ -323,12 +324,29 @@ export default function App() {
               setActiveTab('showcase');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 hover:bg-black text-white text-xs font-semibold backdrop-blur-md border border-white/20 shadow-xl cursor-pointer transition-all hover:scale-105 active:scale-95"
+            className="pointer-events-auto flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/90 hover:bg-black text-white text-xs font-semibold backdrop-blur-md border border-white/20 shadow-xl cursor-pointer transition-all hover:scale-105 active:scale-95"
             title="Tutup Preview & Kembali ke Beranda"
           >
             <ArrowLeft className="w-4 h-4 text-fuchsia-300" />
             <span>Kembali ke Beranda</span>
           </button>
+
+          <div className="pointer-events-auto flex items-center gap-2">
+            <div className="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 text-xs text-slate-200 shadow-lg">
+              <span>Tema:</span>
+              <span className="font-bold text-fuchsia-300">{activeTemplate.name}</span>
+            </div>
+
+            <a
+              href={buildWhatsAppUrl(WA_TEMPLATES.orderPlan(activeTemplate.name, activeTemplate.priceDisplay))}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Pesan Desain Ini</span>
+            </a>
+          </div>
         </div>
 
         <main className="max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4">
@@ -446,7 +464,7 @@ export default function App() {
                 </a>
                 <button
                   type="button"
-                  onClick={() => handleOpenGuestFullscreen('Tamu Undangan')}
+                  onClick={() => handleOpenGuestFullscreen(selectedTemplateId, 'Tamu Undangan')}
                   className="px-3.5 py-1.5 rounded-full hover:text-[#a71366] hover:bg-fuchsia-50/80 transition-colors cursor-pointer flex items-center gap-1.5 text-slate-600 font-semibold"
                 >
                   <Eye className="w-3.5 h-3.5 text-[#a71366]" />
@@ -585,7 +603,7 @@ export default function App() {
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
               onOpenLiveDemo={() => {
-                handleOpenGuestFullscreen();
+                handleOpenGuestFullscreen(selectedTemplateId);
               }}
               onOpenStudio={() => {
                 const el = document.getElementById('katalog-digiat');
@@ -601,12 +619,10 @@ export default function App() {
               isPublicView={true}
               onSelectTemplate={(id) => handleSelectTemplate(id, false)}
               onOpenCustomizer={(id) => {
-                handleSelectTemplate(id, false);
-                handleOpenGuestFullscreen();
+                handleOpenGuestFullscreen(id);
               }}
               onOpenGuestPreview={(id) => {
-                handleSelectTemplate(id, false);
-                handleOpenGuestFullscreen();
+                handleOpenGuestFullscreen(id);
               }}
             />
           </div>
@@ -663,7 +679,7 @@ export default function App() {
                   isPlayingAudio={isPlayingAudio}
                   onToggleAudio={handleToggleAudio}
                   onResetCover={() => setCoverResetCount((c) => c + 1)}
-                  onOpenFullscreen={() => handleOpenGuestFullscreen()}
+                  onOpenFullscreen={() => handleOpenGuestFullscreen(selectedTemplateId)}
                 >
                   <TemplateInvitationRenderer
                     key={`${selectedTemplateId}-${coverResetCount}`}
@@ -696,7 +712,7 @@ export default function App() {
                   setActiveTab('pitch');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                onOpenFullGuestView={() => handleOpenGuestFullscreen()}
+                onOpenFullGuestView={() => handleOpenGuestFullscreen(selectedTemplateId)}
                 subscription={currentSubscription}
               />
             )}
@@ -707,7 +723,7 @@ export default function App() {
                 customization={activeCustomization}
                 onUpdateCustomization={handleUpdateCustomization}
                 wishes={wishes}
-                onLaunchGuestExperience={(guestName) => handleOpenGuestFullscreen(guestName)}
+                onLaunchGuestExperience={(guestName) => handleOpenGuestFullscreen(selectedTemplateId, guestName)}
                 onOpenMobileSimulator={() => {
                   setCoverResetCount((c) => c + 1);
                   setActiveTab('demo');
